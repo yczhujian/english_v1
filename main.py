@@ -90,8 +90,14 @@ if len(abstract_input.split(" ")) > 700:
 if st.button("Give me Patent ideas", type="primary"):
     if abstract_input:
         prompt_with_abstract = prompt.format(patent=option_patent, language=option_language, abstract=abstract_input)
-        drafted_abstract = llm(prompt_with_abstract)
-        st.info(drafted_abstract)
+        response_1st = llm(prompt_with_abstract)
+        st.subheader("Claim 1:")
+        st.info(response_1st)
+        
+        prompt_with_abstract_2nd = prompt_2nd.format(language=option_language, first_response=response_1st)
+        response_2nd = llm(prompt_with_abstract_2nd)
+        st.subheader("Extended Features:")
+        st.info(response_2nd)
         
     else:
         st.write("Please enter a description. The maximum length is 700 words.")
