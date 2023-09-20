@@ -1,13 +1,14 @@
 import streamlit as st
 from langchain import PromptTemplate
 from langchain.llms import OpenAI
+import openai
 
 
 template = """
     I want you to be a top American patent attorney, \
     and you have both engineering and legal doctor degrees. \
     Based on the following description and any material you can gather, \
-    please draft the first claim with more than 500 words in {language} for a {language} {patent} patent.  \
+    please draft the first claim for the {patent} with more than 500 words in the language of {language} for a {language} patent.  \
     Ensure that the {language} patent office examiner will not reject this new patent due to lack of novelty, inventiveness, or missing essential technical features. please double check.\
     Please think step by step and write down the Claim 1. 
     
@@ -17,7 +18,7 @@ template = """
 
 template_2nd = """
     I want you to be an American patent attorney, and you have both engineering and legal doctor degrees. \
-    Please redraft the following claim 1 to be more complicated to have higher sucess rate for grant for an invention patent in {language}:
+    Please redraft the following to be more complicated to have higher sucess rate for grant for an invention patent in the language of {language}, with more than 500 words. \:
     
     {first_response}
 
@@ -34,14 +35,17 @@ prompt_2nd = PromptTemplate(
     template=template_2nd,
 )
 
+# OPENAI_API_KEY = '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'
+# llm = OpenAI(temperature=.7, openai_api_key=OPENAI_API_KEY)
+
 OPENAI_API_KEY = 'sk-IaWRzriZOsG34UszNXxHULWR73xYKLKqFXEWwpWhs1lkaOjx'
 OPENAI_API_BASE = "https://api.fe8.cn/v1"
 
-llm = OpenAI(temperature=.7, openai_api_key=OPENAI_API_KEY, openai_api_base=OPENAI_API_BASE)
-# llm = OpenAI(temperature=.7, openai_api_key=st.secrets['OPENAI_API_KEY'])
+llm = OpenAI(temperature=0, openai_api_key=OPENAI_API_KEY, openai_api_base=OPENAI_API_BASE)
+
 
 st.set_page_config(page_title="R&D Assistant", page_icon=":book:")
-st.header(":orange[R&D] Assistant System :book: :book:", divider='rainbow')
+st.header(":orange[Invention Village] R&D Patent System :book: :book:", divider='rainbow')
 st.write("  ")
 
 col1, col2 = st.columns(2)
@@ -82,31 +86,13 @@ if len(abstract_input.split(" ")) > 700:
     st.write("Please enter a shorter description. The maximum length is 700 words.")
     st.stop()
 
-def update_text_with_example():
-    # print ("in drafted")
-    st.session_state.abstract_input = """This is a tool and method that helps spacecraft fly. 
-    It checks the engine's condition in real-time and adjusts the flight direction based on that info.
-    If there's an engine problem, this method helps the spacecraft fly more accurately to its destination.
-    """
-    
-# st.button("*See An Example*", type='secondary', help="Click to see an example.", on_click=update_text_with_example)
 
-# st.markdown("### Your claims for the Patent:")
-
-# if abstract_input:
-
-#     prompt_with_abstract = prompt.format(patent=option_patent, language=option_language, abstract=abstract_input)
-
-#     drafted_abstract = llm(prompt_with_abstract)
-
-#     st.info(drafted_abstract)
-
-
-if st.button("Draft Patent Claim", type="primary"):
+if st.button("Give me Patent ideas", type="primary"):
     if abstract_input:
         prompt_with_abstract = prompt.format(patent=option_patent, language=option_language, abstract=abstract_input)
         drafted_abstract = llm(prompt_with_abstract)
         st.info(drafted_abstract)
+        
     else:
         st.write("Please enter a description. The maximum length is 700 words.")
         st.stop()
@@ -118,57 +104,66 @@ st.title("Patents Analysis around the World")
 st.image(image='patents.png', width=700, caption='Patents Granted')
 
 
-tab1, tab2, tab3 = st.tabs(["R&D from Title", "R&D from Description", "R&D from PDF"])
+# tab1, tab2, tab3 = st.tabs(["R&D from Title", "R&D from Description", "R&D from PDF"])
 
-with tab1:
-   st.header("R&D from Title")
-   col1, col2 = st.columns(2)
-   with col1:
-        tab_patent = st.selectbox(
-        'Which patent would you like?',
-        ('Invention', 'Utility Model'), key="tab_patent")
+# with tab1:
+#    st.header("R&D from Title")
+#    col1, col2 = st.columns(2)
+#    with col1:
+#         tab_patent = st.selectbox(
+#         'Which patent would you like?',
+#         ('Invention', 'Utility Model'), key="tab_patent")
     
-   with col2:
-        tab_language = st.selectbox(
-        'Which language would you like?',
-        ('American', 'British', 'French', 'German'),key="tab_language")
+#    with col2:
+#         tab_language = st.selectbox(
+#         'Which language would you like?',
+#         ('American', 'British', 'French', 'German'),key="tab_language")
 
-   def get_abstract():
-        tab_text = st.text_area(label="Abstract", label_visibility='collapsed', placeholder="Your technical idea...", key="tab_text")
-        return tab_text
+#    def get_abstract():
+#         tab_text = st.text_area(label="Abstract", label_visibility='collapsed', placeholder="Your technical idea...", key="tab_text")
+#         return tab_text
 
-   tab_abstract = get_abstract()
+#    tab_abstract = get_abstract()
 
-   if len(tab_abstract.split(" ")) > 700:
-        st.write("Please enter a shorter description. The maximum length is 700 words.")
-        st.stop()
+#    if len(tab_abstract.split(" ")) > 700:
+#         st.write("Please enter a shorter description. The maximum length is 700 words.")
+#         st.stop()
     
-   if st.button("Draft Patent Claim", type="primary", key="tab_button"):
-        if tab_abstract:
-            prompt_with_abstract = prompt.format(patent=tab_patent, language=tab_language, abstract=tab_abstract)
-            response_1st = llm(prompt_with_abstract)
-            st.subheader("R&D tips:")
-            st.info(response_1st)
+#    if st.button("Give me R&D tips", type="primary", key="tab_button"):
+#         if tab_abstract:
+#             prompt_with_abstract = prompt.format(patent=tab_patent, language=tab_language, abstract=tab_abstract)
+#             response_1st = llm(tab_abstract)
+#             st.subheader("R&D tips:")
+#             st.info(response_1st)
+#             response = openai.Image.create(
+#                 prompt=" {tab_abstract}, with back and white lines",
+#                 n=1,
+#                 size="512x512"
+#             )
+#             image_url = response['data'][0]['url']
+#             st.image(image_url, width=700, caption='illustrated by AI')
+
+#             print(image_url)
             
-            # prompt_with_abstract_2nd = prompt_2nd.format(language=tab_language, first_response=response_1st)
-            # response_2nd = llm(prompt_with_abstract_2nd)
-            # st.subheader("Claim 1:")
-            # st.info(response_2nd)
-        else:
-            st.write("Please enter a description. The maximum length is 700 words.")
-            st.stop()
+#             # prompt_with_abstract_2nd = prompt_2nd.format(language=tab_language, first_response=response_1st)
+#             # response_2nd = llm(prompt_with_abstract_2nd)
+#             # st.subheader("Claim 1:")
+#             # st.info(response_2nd)
+#         else:
+#             st.write("Please enter a description. The maximum length is 700 words.")
+#             st.stop()
 
-with tab2:
-   st.header("R&D from Description")
-   st.header("to be established")
+# with tab2:
+#    st.header("R&D from Description")
+#    st.header("to be established")
 
-with tab3:
-   st.header("R&D from PDF")
-   uploaded_files = st.file_uploader("Choose a pdf file", accept_multiple_files=True)
-   for uploaded_file in uploaded_files:
-      bytes_data = uploaded_file.read()
-      st.write("filename:", uploaded_file.name)
-      st.write(bytes_data)
+# with tab3:
+#    st.header("R&D from PDF")
+#    uploaded_files = st.file_uploader("Choose a pdf file", accept_multiple_files=True)
+#    for uploaded_file in uploaded_files:
+#       bytes_data = uploaded_file.read()
+#       st.write("filename:", uploaded_file.name)
+#       st.write(bytes_data)
 
 
 
