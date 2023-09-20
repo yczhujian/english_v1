@@ -11,6 +11,7 @@ template = """
     please draft the first claim for the {patent} with more than 500 words in the language of {language} for a {language} patent.  \
     Ensure that the {language} patent office examiner will not reject this new patent due to lack of novelty, inventiveness, or missing essential technical features. please double check.\
     Please think step by step and write down the Claim 1. Don't miss any essential technical features and don't include Chinese characters. \
+    Don't include the wordings such as "claim 1", "claim 2" and replace and begin with "claimed".
     
     The description is as follows:{abstract} 
     
@@ -24,6 +25,15 @@ template_2nd = """
 
 """
 
+template_3rd = """
+    I want you to be an American patent attorney, and you have both engineering and legal doctor degrees. \
+    Based on the following, please draft the technical effects and the problems solved by this new patent against the prior art, so as to be used in the future patent application documents\
+    to make this patent to have higher sucess rate for grant for an invention patent, with more than 500 words. :
+    
+    {second_response}
+
+"""
+
 
 prompt = PromptTemplate(
     input_variables=["patent", "language", "abstract"],
@@ -33,6 +43,11 @@ prompt = PromptTemplate(
 prompt_2nd = PromptTemplate(
     input_variables=["language","first_response"],
     template=template_2nd,
+)
+
+prompt_3rd = PromptTemplate(
+    input_variables=["second_response"],
+    template=template_3rd,
 )
 
 # OPENAI_API_KEY = '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'
@@ -99,6 +114,10 @@ if st.button("Give me Patent ideas", type="primary"):
         st.subheader("Extended Features:")
         st.info(response_2nd)
         
+        prompt_with_abstract_3rd = prompt_3rd.format(second_response=response_2nd)
+        response_3rd = llm(prompt_with_abstract_3rd)
+        st.subheader("Problems Solved:")
+        st.info(response_3rd)
     else:
         st.write("Please enter a description. The maximum length is 700 words.")
         st.stop()
