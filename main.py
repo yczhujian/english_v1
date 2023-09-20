@@ -39,8 +39,8 @@ prompt_2nd = PromptTemplate(
 )
 
 
-# llm = OpenAI(temperature=.7, openai_api_key=st.secrets['OPENAI_API_KEY'], openai_api_base=st.secrets['OPENAI_API_BASE'])
-llm = OpenAI(temperature=.7, openai_api_key=st.secrets['OPENAI_API_KEY'])
+llm = OpenAI(temperature=.7, openai_api_key=st.secrets['OPENAI_API_KEY'], openai_api_base=st.secrets['OPENAI_API_BASE'])
+# llm = OpenAI(temperature=.7, openai_api_key=st.secrets['OPENAI_API_KEY'])
 
 openai_api_key=st.secrets['OPENAI_API_KEY']
 
