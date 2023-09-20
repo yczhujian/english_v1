@@ -34,8 +34,10 @@ prompt_2nd = PromptTemplate(
     template=template_2nd,
 )
 
+OPENAI_API_KEY = 'sk-IaWRzriZOsG34UszNXxHULWR73xYKLKqFXEWwpWhs1lkaOjx'
+OPENAI_API_BASE = "https://api.fe8.cn/v1"
 
-llm = OpenAI(temperature=.7, openai_api_key=st.secrets['OPENAI_API_KEY'], openai_api_base=st.secrets['OPENAI_API_BASE'])
+llm = OpenAI(temperature=.7, openai_api_key=OPENAI_API_KEY, openai_api_base=OPENAI_API_BASE)
 # llm = OpenAI(temperature=.7, openai_api_key=st.secrets['OPENAI_API_KEY'])
 
 st.set_page_config(page_title="R&D Assistant", page_icon=":book:")
