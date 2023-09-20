@@ -38,8 +38,6 @@ prompt_2nd = PromptTemplate(
 llm = OpenAI(temperature=.7, openai_api_key=st.secrets['OPENAI_API_KEY'], openai_api_base=st.secrets['OPENAI_API_BASE'])
 # llm = OpenAI(temperature=.7, openai_api_key=st.secrets['OPENAI_API_KEY'])
 
-openai_api_key=st.secrets['OPENAI_API_KEY']
-
 st.set_page_config(page_title="R&D Assistant", page_icon=":book:")
 st.header(":orange[R&D] Assistant System :book: :book:", divider='rainbow')
 st.write("  ")
@@ -121,7 +119,7 @@ st.image(image='patents.png', width=700, caption='Patents Granted')
 tab1, tab2, tab3 = st.tabs(["R&D from Title", "R&D from Description", "R&D from PDF"])
 
 with tab1:
-   st.header("R&D Ideas from Title")
+   st.header("R&D from Title")
    col1, col2 = st.columns(2)
    with col1:
         tab_patent = st.selectbox(
@@ -159,11 +157,11 @@ with tab1:
             st.stop()
 
 with tab2:
-   st.header("A dog")
-   st.image("https://static.streamlit.io/examples/dog.jpg", width=200)
+   st.header("R&D from Description")
+   st.header("to be established")
 
 with tab3:
-   st.header("An owl")
+   st.header("R&D from PDF")
    uploaded_files = st.file_uploader("Choose a pdf file", accept_multiple_files=True)
    for uploaded_file in uploaded_files:
       bytes_data = uploaded_file.read()
