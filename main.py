@@ -7,7 +7,7 @@ template = """
     I want you to be a top American patent attorney, \
     and you have both engineering and legal doctor degrees. \
     Based on the following description and any material you can gather, \
-    please draft the first claim with more than 500 words in {language} for a {language} {patent} patent. please double check whether there is only one claim! \
+    please draft the first claim with more than 500 words in {language} for a {language} {patent} patent.  \
     Ensure that the {language} patent office examiner will not reject this new patent due to lack of novelty, inventiveness, or missing essential technical features. please double check.\
     Please think step by step and write down the Claim 1. 
     
@@ -17,7 +17,7 @@ template = """
 
 template_2nd = """
     I want you to be an American patent attorney, and you have both engineering and legal doctor degrees. \
-    Please redraft the following with more than 500 words to be more complicated to have higher sucess rate for grant for an invention patent in {language}:
+    Please redraft the following claim 1 to be more complicated to have higher sucess rate for grant for an invention patent in {language}:
     
     {first_response}
 
@@ -147,12 +147,12 @@ with tab1:
         if tab_abstract:
             prompt_with_abstract = prompt.format(patent=tab_patent, language=tab_language, abstract=tab_abstract)
             response_1st = llm(prompt_with_abstract)
-            st.subheader("First draft:")
-            st.info(response_1st)
+            # st.subheader("First draft:")
+            # st.info(response_1st)
             
             prompt_with_abstract_2nd = prompt_2nd.format(language=tab_language, first_response=response_1st)
             response_2nd = llm(prompt_with_abstract_2nd)
-            st.subheader("final draft:")
+            st.subheader("Claim 1:")
             st.info(response_2nd)
         else:
             st.write("Please enter a description. The maximum length is 700 words.")
