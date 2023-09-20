@@ -44,7 +44,7 @@ OPENAI_API_BASE = "https://api.fe8.cn/v1"
 llm = OpenAI(temperature=0, openai_api_key=OPENAI_API_KEY, openai_api_base=OPENAI_API_BASE)
 
 
-st.set_page_config(page_title="Inention Village R&D", page_icon=":book:")
+st.set_page_config(page_title="Invention Village R&D", page_icon=":book:")
 st.header(":orange[Invention Village] R&D Patent System :book: :book:", divider='rainbow')
 st.write("  ")
 
