@@ -10,7 +10,7 @@ template = """
     Based on the following description and any material you can gather, \
     please draft the first claim for the {patent} with more than 500 words in the language of {language} for a {language} patent.  \
     Ensure that the {language} patent office examiner will not reject this new patent due to lack of novelty, inventiveness, or missing essential technical features. please double check.\
-    Please think step by step and write down the Claim 1. 
+    Please think step by step and write down the Claim 1. Don't miss any essential technical features and don't include Chinese characters. \
     
     The description is as follows:{abstract} 
     
@@ -44,7 +44,7 @@ OPENAI_API_BASE = "https://api.fe8.cn/v1"
 llm = OpenAI(temperature=0, openai_api_key=OPENAI_API_KEY, openai_api_base=OPENAI_API_BASE)
 
 
-st.set_page_config(page_title="R&D Assistant", page_icon=":book:")
+st.set_page_config(page_title="Inention Village R&D", page_icon=":book:")
 st.header(":orange[Invention Village] R&D Patent System :book: :book:", divider='rainbow')
 st.write("  ")
 
