@@ -147,13 +147,13 @@ with tab1:
         if tab_abstract:
             prompt_with_abstract = prompt.format(patent=tab_patent, language=tab_language, abstract=tab_abstract)
             response_1st = llm(prompt_with_abstract)
-            # st.subheader("First draft:")
-            # st.info(response_1st)
+            st.subheader("R&D tips:")
+            st.info(response_1st)
             
-            prompt_with_abstract_2nd = prompt_2nd.format(language=tab_language, first_response=response_1st)
-            response_2nd = llm(prompt_with_abstract_2nd)
-            st.subheader("Claim 1:")
-            st.info(response_2nd)
+            # prompt_with_abstract_2nd = prompt_2nd.format(language=tab_language, first_response=response_1st)
+            # response_2nd = llm(prompt_with_abstract_2nd)
+            # st.subheader("Claim 1:")
+            # st.info(response_2nd)
         else:
             st.write("Please enter a description. The maximum length is 700 words.")
             st.stop()
