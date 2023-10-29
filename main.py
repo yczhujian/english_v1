@@ -116,7 +116,7 @@ if st.button("Give me Patent ideas", type="primary"):
         
         prompt_with_abstract_3rd = prompt_3rd.format(second_response=response_2nd)
         response_3rd = llm(prompt_with_abstract_3rd)
-        st.subheader("Problems Solved:")
+        st.subheader("Problems to be Solved:")
         st.info(response_3rd)
     else:
         st.write("Please enter a description. The maximum length is 700 words.")
