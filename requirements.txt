@@ -2,3 +2,9 @@ langchain
 openai
 streamlit
 bs4
+langchain==0.1.5
+langchain-community==0.0.19
+langchain-core==0.1.21
+langchain-openai==0.0.5
+langchainplus-sdk==0.0.17
+langsmith==0.0.87
