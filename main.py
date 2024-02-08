@@ -132,7 +132,7 @@ if st.button("Please give me R&D ideas", type="primary"):
         
         prompt3 = ChatPromptTemplate.from_template(template_3rd)
         chain3 = prompt3 | chat | StrOutputParser()
-        response3 = chain3.invoke({"first_response":"response1", "second_response":"response2", "language":"Chinese"})
+        response3 = chain3.invoke({"first_response":response1, "second_response":response", "language":option_language})
         st.subheader("Problems Solved by this R&D activity:")
         st.info(response3)
     else:
