@@ -1,10 +1,10 @@
 import streamlit as st
+# from langchain.chat_models import ChatOpenAI
 from langchain_openai import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 from langchain.schema.output_parser import StrOutputParser
 
 st.set_page_config(page_title="Invention Village R&D", page_icon=":book:")
-# st.header(":orange[Invention Village] R&D Patent System :book: :book:", divider='rainbow')
 st.header(":orange[Invention Village] R&D Patent System :book: :book:")
 st.write("  ")
 
@@ -37,7 +37,7 @@ with col2:
         ('American', 'British', 'French', 'German', 'Chinese'))
 
 
-chat = ChatOpenAI(openai_api_key="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", temperature=0, model="gpt-4")
+chat = ChatOpenAI(openai_api_key="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", temperature=0, model="gpt-4")
 
 template = """
     I want you to be a top American patent attorney, \
@@ -132,7 +132,7 @@ if st.button("Please give me R&D ideas", type="primary"):
         
         prompt3 = ChatPromptTemplate.from_template(template_3rd)
         chain3 = prompt3 | chat | StrOutputParser()
-        response3 = chain3.invoke({"first_response":response1, "second_response":response", "language":option_language})
+        response3 = chain3.invoke({"first_response":response1, "second_response":response2, "language":option_language})
         st.subheader("Problems Solved by this R&D activity:")
         st.info(response3)
     else:
