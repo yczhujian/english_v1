@@ -59,3 +59,4 @@ image_url = response['data'][0]['url']
 
 print(image_url)
 priint(response)
+print(response['data'][0]['url'])
